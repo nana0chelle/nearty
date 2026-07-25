@@ -10,6 +10,7 @@ class Order {
   DateTime? completedAt;
   bool isReviewed;
   int? rating;
+  String? reviewComment;   // ← tambah field komentar
   final String paymentMethod;
   final double? pickupLat;
   final double? pickupLng;
@@ -28,6 +29,7 @@ class Order {
     this.completedAt,
     this.isReviewed = false,
     this.rating,
+    this.reviewComment,
     this.paymentMethod = 'Cash',
     this.pickupLat,
     this.pickupLng,
@@ -48,6 +50,7 @@ class Order {
       completedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null,
       isReviewed: json['review'] != null,
       rating: json['review'] != null ? json['review']['rating'] : null,
+      reviewComment: json['review'] != null ? json['review']['comment'] : null,
       paymentMethod: json['payment_method'] ?? 'Cash',
       pickupLat: json['pickup_lat'] != null ? double.tryParse(json['pickup_lat'].toString()) : null,
       pickupLng: json['pickup_lng'] != null ? double.tryParse(json['pickup_lng'].toString()) : null,
@@ -56,3 +59,4 @@ class Order {
     );
   }
 }
+

@@ -200,6 +200,26 @@ class OrderController extends GetxController {
     } catch (e) {}
   }
 
+  Future<void> pickupOrder(Order order) async {
+    final token = await _getToken();
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl/orders/${order.id}/status'),
+        headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json', 'Accept': 'application/json'},
+        body: jsonEncode({'status': 'picked_up'}),
+      );
+      if (response.statusCode == 200) {
+        final idx = driverOrders.indexWhere((o) => o.id == order.id);
+        if (idx != -1) {
+          driverOrders[idx].status = 'picked_up';
+          driverOrders.refresh();
+        }
+        Get.snackbar('Barang Diambil! 📦', 'Sekarang antar ke tujuan ya!',
+            backgroundColor: const Color(0xFF4F46E5), colorText: Colors.white);
+      }
+    } catch (e) {}
+  }
+
   Future<void> completeOrder(Order order) async {
     final token = await _getToken();
     try {
@@ -211,7 +231,8 @@ class OrderController extends GetxController {
       if (response.statusCode == 200) {
         driverOrders.removeWhere((o) => o.id == order.id);
         fetchDriverHistory();
-        Get.snackbar('Sukses', 'Pesanan selesai!', backgroundColor: Colors.blue, colorText: Colors.white);
+        Get.snackbar('Pesanan Selesai! 🎉', 'Kerja bagus! Lanjut cari pesanan lagi.',
+            backgroundColor: const Color(0xFF10B981), colorText: Colors.white);
       }
     } catch (e) {}
   }
