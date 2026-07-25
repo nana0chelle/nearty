@@ -10,7 +10,7 @@ class AdminOrdersView extends StatefulWidget {
 }
 
 class _AdminOrdersViewState extends State<AdminOrdersView> {
-  final AdminController adminController = Get.find();
+  final AdminController adminController = Get.put(AdminController());
 
   @override
   void initState() {

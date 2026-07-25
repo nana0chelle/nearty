@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controllers/admin_controller.dart';
+import '../../widgets/animated_pressable.dart';
 
 class AdminUsersView extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class AdminUsersView extends StatefulWidget {
 }
 
 class _AdminUsersViewState extends State<AdminUsersView> {
-  final AdminController adminController = Get.find();
+  final AdminController adminController = Get.put(AdminController());
 
   @override
   void initState() {
@@ -129,13 +130,17 @@ class _AdminUsersViewState extends State<AdminUsersView> {
                           ),
                         ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.edit, size: 20, color: Colors.orange),
-                        onPressed: () => _showEditRoleDialog(user),
+                      AnimatedPressable(
+                        child: IconButton(
+                          icon: const Icon(Icons.edit, size: 20, color: Colors.orange),
+                          onPressed: () => _showEditRoleDialog(user),
+                        ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.delete, size: 20, color: Colors.red),
-                        onPressed: () => _confirmDelete(user),
+                      AnimatedPressable(
+                        child: IconButton(
+                          icon: const Icon(Icons.delete, size: 20, color: Colors.red),
+                          onPressed: () => _confirmDelete(user),
+                        ),
                       ),
                     ],
                   ),

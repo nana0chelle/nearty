@@ -5,6 +5,7 @@ import 'admin/admin_overview_view.dart';
 import 'admin/admin_users_view.dart';
 import 'admin/admin_orders_view.dart';
 import 'admin/admin_reviews_view.dart';
+import '../controllers/admin_controller.dart';
 
 class AdminHomeView extends StatefulWidget {
   @override
@@ -13,6 +14,13 @@ class AdminHomeView extends StatefulWidget {
 
 class _AdminHomeViewState extends State<AdminHomeView> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Register AdminController agar bisa ditemukan oleh semua halaman admin
+    Get.put(AdminController());
+  }
 
   final List<Widget> _pages = [
     AdminOverviewView(),
