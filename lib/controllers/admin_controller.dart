@@ -45,7 +45,7 @@ class AdminController extends GetxController {
       if (token == null) { isLoading.value = false; return; }
 
       final response = await http.get(
-        Uri.parse('http://127.0.0.1:8000/api/admin/dashboard'),
+        Uri.parse('http://172.16.11.79:8000/api/admin/dashboard'),
         headers: _headers(token),
       );
 
@@ -73,7 +73,7 @@ class AdminController extends GetxController {
       final token = await _getToken();
       if (token == null) return;
       final response = await http.get(
-        Uri.parse('http://127.0.0.1:8000/api/admin/users'),
+        Uri.parse('http://172.16.11.79:8000/api/admin/users'),
         headers: _headers(token),
       );
       if (response.statusCode == 200) {
@@ -91,7 +91,7 @@ class AdminController extends GetxController {
       final token = await _getToken();
       if (token == null) return;
       final response = await http.put(
-        Uri.parse('http://127.0.0.1:8000/api/admin/users/$userId'),
+        Uri.parse('http://172.16.11.79:8000/api/admin/users/$userId'),
         headers: _headers(token),
         body: jsonEncode({'role': newRole}),
       );
@@ -111,7 +111,7 @@ class AdminController extends GetxController {
       final token = await _getToken();
       if (token == null) return;
       final response = await http.delete(
-        Uri.parse('http://127.0.0.1:8000/api/admin/users/$userId'),
+        Uri.parse('http://172.16.11.79:8000/api/admin/users/$userId'),
         headers: _headers(token),
       );
       if (response.statusCode == 200) {
@@ -133,7 +133,7 @@ class AdminController extends GetxController {
       final token = await _getToken();
       if (token == null) return;
       final response = await http.get(
-        Uri.parse('http://127.0.0.1:8000/api/admin/orders'),
+        Uri.parse('http://172.16.11.79:8000/api/admin/orders'),
         headers: _headers(token),
       );
       if (response.statusCode == 200) {
@@ -151,7 +151,7 @@ class AdminController extends GetxController {
       final token = await _getToken();
       if (token == null) return;
       final response = await http.put(
-        Uri.parse('http://127.0.0.1:8000/api/admin/orders/$orderId/status'),
+        Uri.parse('http://172.16.11.79:8000/api/admin/orders/$orderId/status'),
         headers: _headers(token),
         body: jsonEncode({'status': status}),
       );
@@ -172,7 +172,7 @@ class AdminController extends GetxController {
       final token = await _getToken();
       if (token == null) return;
       final response = await http.delete(
-        Uri.parse('http://127.0.0.1:8000/api/admin/orders/$orderId'),
+        Uri.parse('http://172.16.11.79:8000/api/admin/orders/$orderId'),
         headers: _headers(token),
       );
       if (response.statusCode == 200) {
@@ -194,7 +194,7 @@ class AdminController extends GetxController {
       final token = await _getToken();
       if (token == null) return;
       final response = await http.get(
-        Uri.parse('http://127.0.0.1:8000/api/admin/reviews'),
+        Uri.parse('http://172.16.11.79:8000/api/admin/reviews'),
         headers: _headers(token),
       );
       if (response.statusCode == 200) {
@@ -212,7 +212,7 @@ class AdminController extends GetxController {
       final token = await _getToken();
       if (token == null) return;
       final response = await http.delete(
-        Uri.parse('http://127.0.0.1:8000/api/admin/reviews/$reviewId'),
+        Uri.parse('http://172.16.11.79:8000/api/admin/reviews/$reviewId'),
         headers: _headers(token),
       );
       if (response.statusCode == 200) {

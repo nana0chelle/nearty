@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
+import '../widgets/animated_pressable.dart';
 import 'login_view.dart';
 
 class RegisterView extends StatelessWidget {
@@ -111,71 +112,76 @@ class RegisterView extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: Obx(
-                        () => ElevatedButton(
-                          onPressed: authController.isLoading.value
-                              ? null
-                              : () {
-                                  if (nameController.text.isNotEmpty &&
-                                      emailController.text.isNotEmpty &&
-                                      passwordController.text.isNotEmpty) {
-                                    authController.register(
-                                      nameController.text,
-                                      emailController.text,
-                                      passwordController.text,
-                                    );
-                                  } else {
-                                    Get.snackbar(
-                                      'Error',
-                                      'Please fill all fields',
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.redAccent,
-                                      colorText: Colors.white,
-                                    );
-                                  }
-                                },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: const Color(0xFF4F46E5),
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                        () => AnimatedPressable(
+                          child: ElevatedButton(
+                            onPressed: authController.isLoading.value
+                                ? null
+                                : () {
+                                    if (nameController.text.isNotEmpty &&
+                                        emailController.text.isNotEmpty &&
+                                        passwordController.text.isNotEmpty) {
+                                      authController.register(
+                                        nameController.text,
+                                        emailController.text,
+                                        passwordController.text,
+                                      );
+                                    } else {
+                                      Get.snackbar(
+                                        'Error',
+                                        'Please fill all fields',
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Colors.redAccent,
+                                        colorText: Colors.white,
+                                      );
+                                    }
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: const Color(0xFF4F46E5),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
                             ),
+                            child: authController.isLoading.value
+                                ? const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Color(0xFF4F46E5),
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : const Text(
+                                    'Sign Up',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                           ),
-                          child: authController.isLoading.value
-                              ? const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    color: Color(0xFF4F46E5),
-                                    strokeWidth: 2,
-                                  ),
-                                )
-                              : const Text(
-                                  'Sign Up',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 24),
-                    TextButton(
-                      onPressed: () => Get.off(() => LoginView()),
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Already have an account? ",
-                          style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14),
-                          children: const [
-                            TextSpan(
-                              text: 'Log in',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                    AnimatedPressable(
+                      scale: 0.96,
+                      child: TextButton(
+                        onPressed: () => Get.off(() => LoginView()),
+                        child: RichText(
+                          text: TextSpan(
+                            text: "Already have an account? ",
+                            style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14),
+                            children: const [
+                              TextSpan(
+                                text: 'Log in',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

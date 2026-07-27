@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/app_controller.dart';
+import '../widgets/animated_pressable.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class AccountSettingsView extends StatefulWidget {
@@ -108,57 +109,22 @@ class _AccountSettingsViewState extends State<AccountSettingsView> {
               icon: Icons.phone_outlined,
             ).animate().fade().slideY(begin: 0.2, delay: 400.ms),
             
-            const SizedBox(height: 32),
-            const Text('Tampilan', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey)),
-            const SizedBox(height: 16),
-            Obx(() => Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
-                  )
-                ],
-              ),
-              child: ListTile(
-                leading: Icon(
-                  appController.isDarkMode.value ? Icons.dark_mode : Icons.light_mode,
-                  color: const Color(0xFF4F46E5),
-                ),
-                title: Text(
-                  'Mode Gelap', 
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                  )
-                ),
-                trailing: Switch(
-                  value: appController.isDarkMode.value,
-                  activeColor: const Color(0xFF4F46E5),
-                  onChanged: (val) {
-                    appController.toggleDarkMode(val);
-                  },
-                ),
-              ),
-            )).animate().fade().slideY(begin: 0.2, delay: 500.ms),
 
-            const SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
               height: 50,
-              child: ElevatedButton(
-                onPressed: _saveSettings,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4F46E5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+              child: AnimatedPressable(
+                child: ElevatedButton(
+                  onPressed: _saveSettings,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4F46E5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 0,
                   ),
-                  elevation: 0,
+                  child: const Text('Simpan Perubahan', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
                 ),
-                child: const Text('Simpan Perubahan', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
               ),
             ).animate().fade().slideY(begin: 0.2, delay: 600.ms),
           ],

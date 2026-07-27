@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import '../models/order_model.dart';
+import '../widgets/animated_pressable.dart';
 
 class OrderDetailSheet extends StatelessWidget {
   final Order order;
@@ -145,27 +146,94 @@ class OrderDetailSheet extends StatelessWidget {
               const Divider(height: 32),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
-                child: Row(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.star, size: 20, color: Colors.amber.shade600),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Penilaian', style: TextStyle(color: Colors.grey.shade500, fontSize: 13)),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: List.generate(5, (index) => Icon(
-                              index < (order.rating ?? 0) ? Icons.star : Icons.star_border,
-                              color: Colors.amber,
-                              size: 16,
-                            )),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            color: Colors.amber.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ],
-                      ),
+                          child: Icon(Icons.star_rounded,
+                              color: Colors.amber.shade600, size: 18),
+                        ),
+                        const SizedBox(width: 10),
+                        Text('Ulasan Pembeli',
+                            style: TextStyle(
+                              color: Colors.grey.shade500,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                            )),
+                      ],
                     ),
+                    const SizedBox(height: 12),
+                    // Star row
+                    Row(
+                      children: [
+                        ...List.generate(5, (index) => Icon(
+                              index < (order.rating ?? 0)
+                                  ? Icons.star_rounded
+                                  : Icons.star_outline_rounded,
+                              color: Colors.amber,
+                              size: 22,
+                            )),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${order.rating}/5',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.amber.shade700,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // Comment (jika ada)
+                    if (order.reviewComment != null &&
+                        order.reviewComment!.isNotEmpty) ...[
+                      const SizedBox(height: 10),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.amber.withOpacity(0.06),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                              color: Colors.amber.withOpacity(0.2)),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.format_quote_rounded,
+                                color: Colors.amber.shade400, size: 20),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                order.reviewComment!,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(Get.context!).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white70
+                                      : const Color(0xFF374151),
+                                  height: 1.5,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ] else ...[
+                      const SizedBox(height: 8),
+                      Text('Tidak ada komentar.',
+                          style: TextStyle(
+                              color: Colors.grey.shade400,
+                              fontSize: 13,
+                              fontStyle: FontStyle.italic)),
+                    ],
                   ],
                 ),
               ),
@@ -173,14 +241,16 @@ class OrderDetailSheet extends StatelessWidget {
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => Get.back(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4F46E5),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: AnimatedPressable(
+                child: ElevatedButton(
+                  onPressed: () => Get.back(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4F46E5),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  ),
+                  child: const Text('Tutup', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
                 ),
-                child: const Text('Tutup', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
               ),
             ),
           ],

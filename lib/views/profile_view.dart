@@ -4,6 +4,7 @@ import '../controllers/app_controller.dart';
 import '../views/login_view.dart';
 import '../views/account_settings_view.dart';
 import '../views/help_support_view.dart';
+import '../widgets/animated_pressable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileView extends StatelessWidget {
@@ -160,31 +161,37 @@ class ProfileView extends StatelessWidget {
                     clipBehavior: Clip.antiAlias,
                     child: Column(
                     children: [
-                      ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                        leading: Icon(Icons.person_outline, color: isDark ? Colors.white : Colors.black87),
-                        title: const Text('Pengaturan Akun'),
-                        trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                        onTap: () {
-                          Get.to(() => const AccountSettingsView(), transition: Transition.rightToLeft);
-                        },
+                      AnimatedPressable(
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                          leading: Icon(Icons.person_outline, color: isDark ? Colors.white : Colors.black87),
+                          title: const Text('Pengaturan Akun'),
+                          trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                          onTap: () {
+                            Get.to(() => const AccountSettingsView(), transition: Transition.rightToLeft);
+                          },
+                        ),
                       ),
                       const Divider(height: 1),
-                      ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                        leading: Icon(Icons.help_outline, color: isDark ? Colors.white : Colors.black87),
-                        title: const Text('Bantuan & Dukungan'),
-                        trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                        onTap: () {
-                          Get.to(() => const HelpSupportView(), transition: Transition.rightToLeft);
-                        },
+                      AnimatedPressable(
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                          leading: Icon(Icons.help_outline, color: isDark ? Colors.white : Colors.black87),
+                          title: const Text('Bantuan & Dukungan'),
+                          trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                          onTap: () {
+                            Get.to(() => const HelpSupportView(), transition: Transition.rightToLeft);
+                          },
+                        ),
                       ),
                       const Divider(height: 1),
-                      ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                        leading: const Icon(Icons.logout, color: Colors.redAccent),
-                        title: const Text('Keluar (Logout)', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
-                        onTap: _logout,
+                      AnimatedPressable(
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                          leading: const Icon(Icons.logout, color: Colors.redAccent),
+                          title: const Text('Keluar (Logout)', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
+                          onTap: _logout,
+                        ),
                       ),
                     ],
                   ),

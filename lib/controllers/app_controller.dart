@@ -13,7 +13,6 @@ class AppController extends GetxController {
   var userName = 'User'.obs;
   var userEmail = 'user@example.com'.obs;
   var userPhone = '08123456789'.obs;
-  var isDarkMode = false.obs;
 
   @override
   void onInit() {
@@ -26,14 +25,9 @@ class AppController extends GetxController {
     userName.value = prefs.getString('user_name') ?? 'User';
     userEmail.value = prefs.getString('user_email') ?? 'user@example.com';
     userPhone.value = prefs.getString('user_phone') ?? '08123456789';
-    isDarkMode.value = prefs.getBool('is_dark_mode') ?? false;
     
-    // Apply theme on load
-    if (isDarkMode.value) {
-      Get.changeThemeMode(ThemeMode.dark);
-    } else {
-      Get.changeThemeMode(ThemeMode.light);
-    }
+    // Always light mode
+    Get.changeThemeMode(ThemeMode.light);
   }
 
   Future<void> updateUserProfile(String newName, String newEmail, String newPhone) async {
@@ -44,13 +38,6 @@ class AppController extends GetxController {
     userName.value = newName;
     userEmail.value = newEmail;
     userPhone.value = newPhone;
-  }
-
-  Future<void> toggleDarkMode(bool value) async {
-    isDarkMode.value = value;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('is_dark_mode', value);
-    Get.changeThemeMode(value ? ThemeMode.dark : ThemeMode.light);
   }
 
   void toggleMode() {

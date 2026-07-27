@@ -12,7 +12,7 @@ class OrderController extends GetxController {
   var availableOrders = <Order>[].obs;
   var driverOrders = <Order>[].obs;
   var driverHistoryOrders = <Order>[].obs;
-  final String baseUrl = 'http://127.0.0.1:8000/api';
+  final String baseUrl = 'http://172.16.11.79:8000/api';
 
   @override
   void onInit() {
@@ -138,10 +138,15 @@ class OrderController extends GetxController {
         fetchMyOrders();
         Get.snackbar('Sukses', 'Pesanan sedang dicarikan driver!', backgroundColor: Colors.green, colorText: Colors.white);
       } else {
-        Get.snackbar('Error', 'Gagal membuat pesanan', backgroundColor: Colors.red, colorText: Colors.white);
+        String errMsg = 'Gagal membuat pesanan';
+        try {
+          final data = jsonDecode(response.body);
+          if (data['message'] != null) errMsg = data['message'];
+        } catch (_) {}
+        Get.snackbar('Error', errMsg, backgroundColor: Colors.red, colorText: Colors.white);
       }
     } catch (e) {
-      print('Error creating order: $e');
+      Get.snackbar('Error', 'Koneksi gagal: $e', backgroundColor: Colors.red, colorText: Colors.white);
     }
   }
 
@@ -161,9 +166,16 @@ class OrderController extends GetxController {
         fetchMyOrders();
         Get.snackbar('Sukses', 'Pesanan diperbarui', backgroundColor: Colors.green, colorText: Colors.white);
       } else {
-        Get.snackbar('Error', 'Gagal memperbarui pesanan', backgroundColor: Colors.red, colorText: Colors.white);
+        String errMsg = 'Gagal memperbarui pesanan';
+        try {
+          final data = jsonDecode(response.body);
+          if (data['message'] != null) errMsg = data['message'];
+        } catch (_) {}
+        Get.snackbar('Error', errMsg, backgroundColor: Colors.red, colorText: Colors.white);
       }
-    } catch (e) {}
+    } catch (e) {
+      Get.snackbar('Error', 'Koneksi gagal: $e', backgroundColor: Colors.red, colorText: Colors.white);
+    }
   }
 
   Future<void> deleteOrder(int id) async {
@@ -177,9 +189,16 @@ class OrderController extends GetxController {
         fetchMyOrders();
         Get.snackbar('Sukses', 'Pesanan dibatalkan', backgroundColor: Colors.green, colorText: Colors.white);
       } else {
-        Get.snackbar('Error', 'Gagal membatalkan pesanan', backgroundColor: Colors.red, colorText: Colors.white);
+        String errMsg = 'Gagal membatalkan pesanan';
+        try {
+          final data = jsonDecode(response.body);
+          if (data['message'] != null) errMsg = data['message'];
+        } catch (_) {}
+        Get.snackbar('Error', errMsg, backgroundColor: Colors.red, colorText: Colors.white);
       }
-    } catch (e) {}
+    } catch (e) {
+      Get.snackbar('Error', 'Koneksi gagal: $e', backgroundColor: Colors.red, colorText: Colors.white);
+    }
   }
 
   Future<void> acceptOrder(Order order) async {
@@ -195,9 +214,16 @@ class OrderController extends GetxController {
         driverOrders.add(Order.fromJson(updatedData));
         Get.snackbar('Sukses', 'Pesanan diambil!', backgroundColor: Colors.green, colorText: Colors.white);
       } else {
-        Get.snackbar('Error', 'Gagal mengambil pesanan', backgroundColor: Colors.red, colorText: Colors.white);
+        String errMsg = 'Gagal mengambil pesanan';
+        try {
+          final data = jsonDecode(response.body);
+          if (data['message'] != null) errMsg = data['message'];
+        } catch (_) {}
+        Get.snackbar('Error', errMsg, backgroundColor: Colors.red, colorText: Colors.white);
       }
-    } catch (e) {}
+    } catch (e) {
+      Get.snackbar('Error', 'Koneksi gagal: $e', backgroundColor: Colors.red, colorText: Colors.white);
+    }
   }
 
   Future<void> pickupOrder(Order order) async {
@@ -216,8 +242,17 @@ class OrderController extends GetxController {
         }
         Get.snackbar('Barang Diambil! 📦', 'Sekarang antar ke tujuan ya!',
             backgroundColor: const Color(0xFF4F46E5), colorText: Colors.white);
+      } else {
+        String errMsg = 'Gagal memperbarui status';
+        try {
+          final data = jsonDecode(response.body);
+          if (data['message'] != null) errMsg = data['message'];
+        } catch (_) {}
+        Get.snackbar('Error', errMsg, backgroundColor: Colors.red, colorText: Colors.white);
       }
-    } catch (e) {}
+    } catch (e) {
+      Get.snackbar('Error', 'Koneksi gagal: $e', backgroundColor: Colors.red, colorText: Colors.white);
+    }
   }
 
   Future<void> completeOrder(Order order) async {
@@ -233,8 +268,17 @@ class OrderController extends GetxController {
         fetchDriverHistory();
         Get.snackbar('Pesanan Selesai! 🎉', 'Kerja bagus! Lanjut cari pesanan lagi.',
             backgroundColor: const Color(0xFF10B981), colorText: Colors.white);
+      } else {
+        String errMsg = 'Gagal menyelesaikan pesanan';
+        try {
+          final data = jsonDecode(response.body);
+          if (data['message'] != null) errMsg = data['message'];
+        } catch (_) {}
+        Get.snackbar('Error', errMsg, backgroundColor: Colors.red, colorText: Colors.white);
       }
-    } catch (e) {}
+    } catch (e) {
+      Get.snackbar('Error', 'Koneksi gagal: $e', backgroundColor: Colors.red, colorText: Colors.white);
+    }
   }
 
   Future<void> submitReview(int orderId, int rating, String comment) async {
@@ -252,8 +296,15 @@ class OrderController extends GetxController {
         fetchMyOrders();
         Get.snackbar('Terima Kasih!', 'Ulasan kamu berhasil dikirim.', backgroundColor: Colors.green, colorText: Colors.white);
       } else {
-        Get.snackbar('Error', 'Gagal mengirim ulasan', backgroundColor: Colors.red, colorText: Colors.white);
+        String errMsg = 'Gagal mengirim ulasan';
+        try {
+          final data = jsonDecode(response.body);
+          if (data['message'] != null) errMsg = data['message'];
+        } catch (_) {}
+        Get.snackbar('Error', errMsg, backgroundColor: Colors.red, colorText: Colors.white);
       }
-    } catch (e) {}
+    } catch (e) {
+      Get.snackbar('Error', 'Koneksi gagal: $e', backgroundColor: Colors.red, colorText: Colors.white);
+    }
   }
 }
